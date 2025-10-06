@@ -1,35 +1,22 @@
 #root {
-  width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+    width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
 
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 .registration {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 
-  width: 400px;
+    width: 400px;
 }
 
-input {
-  font-size: 24px;
-}
-
-input::placeholder {
-  font-size: 16px;
-}
-
-.errorLabel {
-  font-size: 16px
-}
-
-button{
-  /* width: 160px; */
-  margin: auto;
-  padding: 5px 10px;
-  font-size: 16px;
+button {
+    margin: auto;
+    padding: 5px 10px;
+    font-size: 16px;
 }

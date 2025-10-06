@@ -1,10 +1,13 @@
 import { useState, useRef, useEffect } from "react"
-import "./App.css"
+import './App.css'
+
+import InputForm from "./components/inputForm"
 
 function App() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [passwordRepeat, setPasswordRepeat] = useState("")
+  
   const [emailError, setEmailError] = useState(null)
   const [passwordError, setPasswordError] = useState(null)
   const [passwordRepeatError, setPasswordRepeatError] = useState(null)
@@ -39,8 +42,8 @@ function App() {
     }
   }
 
-  function validatePasswordRepeat(value, pwd) {
-    if (value && value !== pwd) {
+  function validatePasswordRepeat(value, password) {
+    if (value && value !== password) {
       setPasswordRepeatError("Пароли не совпадают")
     } else {
       setPasswordRepeatError(null)
@@ -80,39 +83,38 @@ function App() {
   return (
     <>
       <form className="registration" onSubmit={onSubmit}>
-        <label>Email:</label>
-        {emailTouched && emailError && (
-          <div className="errorLabel">{emailError}</div>
-        )}
-        <input
+        <InputForm
           type="email"
           name="email"
           placeholder="Введите свой email"
-          value={email}
-          onBlur={() => setEmailTouched(true)}
-          onChange={emailChange}
+          valueForm={email}
+          blurFunction={setEmailTouched}
+          changeFunction={emailChange}
+          error={emailTouched ? emailError : null}
+          label="Email:"
         />
-        <label>Пароль:</label>
-        {passwordError && <div className="errorLabel">{passwordError}</div>}
-        <input
+
+        <InputForm
           type="text"
-          name="password"
-          placeholder="Введите свой пароль"
-          value={password}
-          onChange={passwordChange}
+          name="text"
+          placeholder={"Введите свой пароль"}
+          valueForm={password}
+          changeFunction={passwordChange}
+          error={passwordError}
+          label="Пароль:"
         />
-        {passwordRepeatTouched && passwordRepeatError && (
-          <div className="errorLabel">{passwordRepeatError}</div>
-        )}
-        <input
-          type="text" // текст чтобы сразу смотреть вводимый текст
-          name="passwordRepeat"
+
+        <InputForm
+          type="text"
+          name="text"
           placeholder="Повторите введенный пароль "
-          value={passwordRepeat}
-          onBlur={() => setPasswordRepeatTouched(true)}
-          onChange={passwordRepeatChange}
+          valueForm={passwordRepeat}
+          blurFunction={setPasswordRepeatTouched}
+          changeFunction={passwordRepeatChange}
           disabled={!password}
+          error={passwordRepeatTouched ? passwordRepeatError : null}
         />
+
         <button type="submit" disabled={!isFormValid} ref={submitButtonRef}>
           Отправить
         </button>
