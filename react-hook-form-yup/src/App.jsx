@@ -4,18 +4,17 @@ import { yupResolver } from "@hookform/resolvers/yup"
 
 import { useEffect, useRef } from "react"
 import "./App.css"
+import InputForm from "./components/InputForm"
 
 const schemaRegistration = yup.object({
-  email: yup.string().email("Некорректный email").required("Введите email"),
+  email: yup.string().email("Некорректный email"),
   password: yup
     .string()
     .matches(/^[\w]*$/, "Пароль: только буквы и цифры")
-    .min(6, "Должно быть не менее 6 символов")
-    .required("Введите пароль"),
+    .min(6, "Должно быть не менее 6 символов"),
   passwordRepeat: yup
     .string()
-    .oneOf([yup.ref("password")], "Пароли не совпадают")
-    .required("Повторите введенный пароль"),
+    .oneOf([yup.ref("password")], "Пароли не совпадают"),
 })
 
 function App() {
@@ -42,35 +41,32 @@ function App() {
   return (
     <>
       <form className="registration" onSubmit={handleSubmit(onSubmit)}>
-        <label>Email:</label>
-        {errors.email && (
-          <div className="errorLabel">{errors.email?.message}</div>
-        )}
-        <input
+        <InputForm
+          label="Email:"
           type="email"
           name="email"
           placeholder="Введите свой email"
-          {...register("email")}
+          errors={errors.email}
+          register={register}
         />
-        <label>Пароль:</label>
-        {errors.password && (
-          <div className="errorLabel">{errors.password?.message}</div>
-        )}
-        <input
-          type="text" // текст чтобы сразу смотреть вводимый текст
+
+        <InputForm
+          label="Пароль:"
+          type="text"
           name="password"
           placeholder="Введите свой пароль"
-          {...register("password")}
+          errors={errors.password}
+          register={register}
         />
-        {errors.passwordRepeat && (
-          <div className="errorLabel">{errors.passwordRepeat?.message}</div>
-        )}
-        <input
-          type="text" // текст чтобы сразу смотреть вводимый текст
+
+        <InputForm
+          type="text"
           name="passwordRepeat"
-          placeholder="Повторите введенный пароль "
-          {...register("passwordRepeat")}
+          placeholder="Повторите введенный пароль"
+          errors={errors.passwordRepeat}
+          register={register}
         />
+
         <button type="submit" disabled={!isValid} ref={submitButtonRef}>
           Отправить
         </button>
